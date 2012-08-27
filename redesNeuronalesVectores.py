@@ -3,13 +3,15 @@ import numpy
 import random
 
 class redNeuronal:
-    def __init__(self, datos):
+    def __init__(self, datos, enfriamiento):
         self.valoresDeEntrada = self.stringToVector(datos)
         self.vectorDePesos = self.generador(len(self.valoresDeEntrada))
-        self.validacionNeurona = self.EvaluacionDeEntradas(self.valoresDeEntrada, self.vectorDePesos)
+        self.umbral = self.vectorDePesos[-1]
+        self.validacionNeurona = self.EvaluacionDeEntradas(self.valoresDeEntrada, self.vectorDePesos, self.umbral, enfriamiento)
 
     def stringToVector(string):
         vector = list(string.split(' '))
+        print "VECTOR: "+vector
         return vector
 
     def generador(self, tamanioDeVector):
@@ -19,20 +21,20 @@ class redNeuronal:
         vect.append(random.uniform)
         return vect
 
-    def EvaluacionDeEntradas(self, entrada, vectorDePesos):
-        umbral = vectorDePesos[-1]
-        vectorDePesos = vectorDePesos[:-2]
+    def EvaluacionDeEntradas(self, entrada, vectorDePesos, umbral, enfriamiento):
+        vectorDePesos = vectorDePesos[]
         productoNeurona = list()
-        acumulado = 0
         for item in entrada:
             acumulado += vectorDePesos[aux] * item
         if umbral < acumulado:
+            print acumulado
             return True
         else:
-            return False    
+            #realizar de forma recursiva evaluacion de entradas dando un enfriamiento por cada iteracion
+            return EvaluacionDeEntradas()
+
 def main():
-    
-    neurona = redNeuronal(argv[1])
+    neurona = redNeuronal(argv[1], float(argv[2]))
     print neurona.EvaluacionDeEntradas
 
     
