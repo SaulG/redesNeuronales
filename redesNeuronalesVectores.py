@@ -24,14 +24,21 @@ class redNeuronal:
     def EvaluacionDeEntradas(self, entrada, vectorDePesos, umbral, enfriamiento):
         vectorDePesos = vectorDePesos[]
         productoNeurona = list()
+        aux = 0
         for item in entrada:
-            acumulado += vectorDePesos[aux] * item
-        if umbral < acumulado:
-            print acumulado
+            if( ( vectorDePesos[aux] * item ) == 1 ):
+                productoNeurona[aux] = 1
+            else:
+                productoNeurona[aux] = 0
+            aux + = 1
+        if umbral < sum(productoNeurona):
+            print "Producto de neurona"
+            print productoNeurona
+            print "Sumatoria de la lista de producto"
+            print sum(productoNeurona)
             return True
         else:
-            #realizar de forma recursiva evaluacion de entradas dando un enfriamiento por cada iteracion
-            return EvaluacionDeEntradas()
+            return False
 
 def main():
     neurona = redNeuronal(argv[1], float(argv[2]))
