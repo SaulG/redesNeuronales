@@ -26,13 +26,10 @@ class redNeuronal:
     def EvaluacionDeEntradas(self, entrada, vectorDePesos, umbral, enfriamiento):
         productoNeurona = list()
         aux = 0
-        print umbral
-        for item in entrada:
-            print aux, item
-            if( ( vectorDePesos[aux] * float(item) ) >= 0 ):
-                productoNeurona.append(1)
-            else:
-                productoNeurona.append(0)
+        if( ( vectorDePesos[aux] * float(item) ) >= 0 ):
+            1
+        else:
+            productoNeurona.append(0)
             aux+=1
         if  0.0 < sum(productoNeurona):
             print 
