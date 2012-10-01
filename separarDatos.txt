@@ -1,0 +1,4 @@
+#Aqui muestra como seprar datos donde terminen en 1
+saul$ grep " 1$" resultado.dat > unos.dat
+#Lo mismo pero con terminacion -1
+saul$ grep " -1$" resultado.dat > menosunos.dat 
