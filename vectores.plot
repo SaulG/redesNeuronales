@@ -1,0 +1,5 @@
+set key outside Right
+set term png
+set output 'vectores.png'
+plot ((0.2817 * x - 0.4589) / (0.9790)) with lines lw 3 lt 3 title "Condicion", ((0.6478 * x + 0.0703)/0.645) with lines lw 1 lt 4 title "Neurona inicial", ((0.2628 * x - 0.4296)/1.0458) with lines lw 2 lt 4, 'unosCorrectos.dat' using 1:2 with points pt 7 lt 2 title "Unos correctos", 'unosIncorrectos.dat' using 1:2 with points pt 7 lt 1 title "Unos incorrectos", 'menosUnosCorrectos.dat' using 1:2 with points pt 5 lt 2 title "Menos unos correctos", 'menosUnosIncorrectos.dat' using 1:2 with points pt 5 lt 1 title "Menos unos incorrectos"
+plot ((0.2817 * x - 0.4589) / (0.9790)) with lines lw 3 lt 3 title "Condicion", ((0.6478 * x + 0.0703)/0.645) with lines lw 1 lt 4 title "Neurona inicial", ((0.2628 * x - 0.4296)/1.0458) with lines lw 2 lt 4 title "Neurona final", 'unosCorrectos.dat' using 1:2 with points pt 7 lt 2 title "Unos correctos", 'unosIncorrectos.dat' using 1:2 with points pt 7 lt 1 title "Unos incorrectos", 'menosUnosCorrectos.dat' using 1:2 with points pt 5 lt 2 title "Menos unos correctos", 'menosUnosIncorrectos.dat' using 1:2 with points pt 5 lt 1 title "Menos unos incorrectos"
