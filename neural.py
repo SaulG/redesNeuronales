@@ -61,9 +61,6 @@ def genera(dimension):
 #Se le da a la neurona una n dimension para que genere
 # su vector de pesos, para luego se generen una cierta cantidad
 # de vectores que la neurona va ir clasificando
-
-
-
 def main():
     dim = int(argv[1])
     neurona = Neurona(dim)
