@@ -9,6 +9,7 @@ TASA_DE_APRENDIZAJE = 0.05
 class Neurona:
     def __init__(self, dim):
         self.w = self.pesos(dim)
+        self.e = 0.0
         return
 
     def entrena(self, entrada, respuestaDeseada):
@@ -51,6 +52,17 @@ class Capa:
         for neurona in self.neuronas:
             self.y.append(neurona.calcula(entrada))
         return self.y
+    
+    def entrena(self, desada, siguiente):
+        global TASA_DE_APRENDIZAJE
+        if deseada is not None:
+            self.e = deseada - self.y
+        else:
+            self.e = 0.0
+            for neurona in siguiente:
+                self.e+= neurona.w * neurona.e
+                self.w += self.e * self.x * TASA_DE_APRENDIZAJE
+        return
 
 class Red:
     def __init__(self, archivo):
@@ -70,6 +82,13 @@ class Red:
             entrada = c.calcula(entrada)
         return entrada
 
+    def entrena(self):
+        self.capas[-1].entrena(t,None)
+        n = len(self.capas) - 1
+        for i in n:
+            self.capas[n -i -1].entrena(None, self.capas[n -i])
+        return
+                                        
 def genera(dimension):
     global ACTIVACION, DESACTIVACION
     lista = list()
@@ -77,7 +96,6 @@ def genera(dimension):
         value = random.uniform(DESACTIVACION, ACTIVACION)
         lista.append(value)
     return lista
-
 
 def main():
     try:
@@ -87,5 +105,4 @@ def main():
     for i in xrange(20):
         entrada = genera(4)
         print entrada, red.calcula(entrada)
-
 main()
