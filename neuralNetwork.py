@@ -9,19 +9,20 @@ TASA_DE_APRENDIZAJE = 0.05
 class Neurona:
     def __init__(self, dim):
         self.w = self.pesos(dim)
+        return
 
     def entrena(self, entrada, respuestaDeseada):
         global TASA_DE_APRENDIZAJE
         self.calcula(entrada)
-        self.respuesta = respuestaDeseada
-        self.cambio = TASA_DE_APRENDIZAJE * (self.respuesta - self.y) * self.x
-        self.w += self.cambio
+        if self.y != respuestaDeseada:
+            self.cambio = TASA_DE_APRENDIZAJE * (respuestaDeseada - self.y) * entrada
+            self.w += self.cambio
         return
 
-    def pesos(self, w):
+    def pesos(self, dim):
         global ACTIVACION, DESACTIVACION
         lista = list()
-        for i in range(w + 1):
+        for i in range(dim):
             lista.append(random.uniform(DESACTIVACION, ACTIVACION))
         lista = array(lista)
         return lista
@@ -38,43 +39,36 @@ class Neurona:
 
 class Capa:
     def __init__(self, tamanio, dim):
-        self.neuronas = self.inicializaNeurona(tamanio, dim)
-        self.tamanio = tamanio
-        self.dim = dim
-        
-    def inicializaNeurona(self, tamanio, dim):
-        neuronas = list()
-        for e in range(tamanio):
-            neuronas.append([Neurona(dim)]) 
-        return neuronas
+        self.neuronas = list()
+        for e in xrange(tamanio):
+            self.neuronas.append(Neurona(dim + 1)) 
+        return
 
     def calcula(self, entrada):
         self.y = list()
-        for neurona in self.neuronas
-            y.append(neurona.calcula(entrada)
-        return array(self.y)
+        entrada.append(-1.0)
+        entrada = array(entrada)
+        for neurona in self.neuronas:
+            self.y.append(neurona.calcula(entrada))
+        return self.y
 
 class Red:
     def __init__(self, archivo):
-        self.capas = self.inicializaCapas(archivo)
-
-    def inicializaCapas(self, archivo):
-        datos = open(archivo,"r")
-        datos = datos.readlines()
-        datos.close()
-        datosDeConfiguracion = list()
-        for d in datos:
-            datosDeConfiguracion.append(int(d.strip()))    
-        capas = list()
-        for e in range(len(datosDeConfiguracion)):
-            if e == ( len(datosDeConfiguracion) -1):
-                break
-            capas.append(Capa(datosDeConfiguracion[e] , datosDeConfiguracion[e + 1]))
-        return capas
+        dato = open(archivo,"r")
+        d = dato.readlines()
+        dato.close()
+        dim = int(d.pop(0))
+        self.capas = list()
+        while len(d) > 0:
+            cantidad = int(d.pop(0))
+            self.capas.append(Capa(cantidad, dim))
+            dim = cantidad
+        return
 
     def calcula(self, entrada):
-        for e in range(len(self.capas)):
-            capas[e].calcula(entrada)
+        for c in self.capas:
+            entrada = c.calcula(entrada)
+        return entrada
 
 def genera(dimension):
     global ACTIVACION, DESACTIVACION
@@ -82,13 +76,16 @@ def genera(dimension):
     for i in range(dimension):
         value = random.uniform(DESACTIVACION, ACTIVACION)
         lista.append(value)
-    lista.append(-1.0)
-    x = array(lista)
-    return x
+    return lista
+
 
 def main():
     try:
         red = Red(argv[1])
     except:
-        red = Red("configuracion.dat")
+        red = Red("configuration.dat")
+    for i in xrange(20):
+        entrada = genera(4)
+        print entrada, red.calcula(entrada)
+
 main()
