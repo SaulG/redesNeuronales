@@ -62,6 +62,23 @@ def genera(dimension):
 # su vector de pesos, para luego se generen una cierta cantidad
 # de vectores que la neurona va ir clasificando
 
+class Capa:
+    def __init__(self, tamanio, dim):
+        self.capa = self.inicializaNeurona(tamanio, dim)
+        self.tamanio = tamanio
+        
+    def inicializaNeurona(self, tamanio, dim):
+        capa = list()
+        for e in range(tamanio):
+            capa.append([Neurona(dim),Condicion(dim)]) 
+        return capa
+
+    def calculaCondicion(self, entrada):
+        self.entrada = entrada
+        for e in range(len(self.capa)):
+            respuestaDeseada = self.capa[e][1].calcula(entrada)
+            self.capa[e][0].entrena(entrada, respuestaDeseada)
+
 
 
 def main():
@@ -69,14 +86,19 @@ def main():
         dim = int(argv[1])
     except:
         dim = 2
-    neurona = Neurona(dim)
-    condicion = Condicion(dim)
-    print '# ', condicion.w, 'condicion'
-    print '# ', neurona.w, 'neurona inicial'
+    tamanio_de_capa = 20
+    capa = Capa(tamanio_de_capa, dim)
+    print "Vector de pesos inicial de las neuronas"
+    for e in range(tamanio_de_capa):
+        for i in range(2):
+            print capa.capa[e][i].w
+    print "########################################"
     for i in range(5000):
         entrada = genera(dim)
-        respuestaDeseada = condicion.calcula(entrada)
-        neurona.entrena(entrada, respuestaDeseada)
-        print '%s %d %d' % (' '.join([str(elemento) for elemento in neurona.x[:-1]]), neurona.y, respuestaDeseada) 
-    print '# ', neurona.w, 'neurona final'
+        capa.calculaCondicion(entrada)
+    print "Vector de pesos inicial de las neuronas"
+    for e in range(tamanio_de_capa):
+        for i in range(2):
+            print capa.capa[e][i].w
+    print "########################################"
 main()

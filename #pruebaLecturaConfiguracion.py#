@@ -1,0 +1,34 @@
+def main():
+    datos = open("configuration.dat","r")
+    datos = datos.readlines()
+    lista = list()
+    for d in datos:
+        lista.append(d.strip())
+    dim = 0
+    neurona = 0
+    dt = list()
+    aux = 0
+    for i in lista:
+        print "Linea ", aux," ",i
+        if i == 0:
+            break
+        
+    for e in range(len(lista)):
+        if e == (len(lista) - 1):
+            break
+        print "Dimension",lista[e]," Neuronas ", lista[e + 1]
+main()
+
+for e in range(len(datosDeConfiguracion)):
+            if e == ( len(datosDeConfiguracion) -1):
+                break
+            elif e == 0:
+                capas.append(Capa(datosDeConfiguracion[e] , datosDeConfiguracion[e + 1]))
+            for k in range(5000):
+                entrada = genera(datosDeConfiguracion[e])
+                capas[e].calculaCondicion(entrada)
+        else:
+            capas.append(Capa(datosDeConfiguraion[e] , datosDeConfiguracion[e + 1]))
+            for i in range(datosDeConfiguracion[e+1]):
+                for j in range(datosDeConfiguracion[e]):
+                    capas[e].calculaCondicion(capas[e-1].capa[e][i].y)
