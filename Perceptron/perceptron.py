@@ -8,7 +8,7 @@ class Neurona:
         self.pesos = []
         for i in range(nEntradas):
             self.pesos.append(random.random())
-        self.pesos.append(random.random()/2.0)# Umbral
+        self.pesos.append(random.random())# Umbral
 
     def sumador(self, entradas):
         suma = 0.0
