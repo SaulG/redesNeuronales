@@ -1,10 +1,11 @@
 from numpy import array
 from sys import argv
-import random
+import random, math
 
 ACTIVACION = 1.0
 DESACTIVACION = -1.0
 TASA_DE_APRENDIZAJE = 0.05
+THETA = 1.0
 
 class Condicion:
     def __init__(self, dim):
@@ -20,9 +21,11 @@ class Condicion:
         lista = array(lista)
         return lista
     def calcula(self, entrada):
-        global ACTIVACION, DESACTIVACION
+        global ACTIVACION, DESACTIVACION, THETA
         self.x = entrada
-        self.a = sum(self.x * self.w)
+        #Cambie por el wave kernel function
+        #self.a = sum(self.x * self.w)
+        self.a = sum(  ( ( THETA / self.x - self.w ) * ( math.sin * ( self.x - self.y / THETA ) ) ) )
         if self.a >= 0.0:
             self.y = ACTIVACION
         else:

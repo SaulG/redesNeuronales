@@ -11,9 +11,20 @@ class Neurona:
         self.w = self.pesos(dim)
         self.e = 0.0
         return
+    
+    def calcula(self, entrada):
+        global ACTIVACION, DESACTIVACION
+        self.x = entrada
+        self.a = sum(self.x * self.w)
+        if self.a >= 0.0:
+            self.y = ACTIVACION
+        else:
+            self.y = DESACTIVACION
+        return self.y
 
     def entrena(self, entrada, respuestaDeseada):
         global TASA_DE_APRENDIZAJE
+        self.x = entrada
         self.calcula(entrada)
         if self.y != respuestaDeseada:
             self.cambio = TASA_DE_APRENDIZAJE * (respuestaDeseada - self.y) * entrada
@@ -27,16 +38,6 @@ class Neurona:
             lista.append(random.uniform(DESACTIVACION, ACTIVACION))
         lista = array(lista)
         return lista
-
-    def calcula(self, entrada):
-        global ACTIVACION, DESACTIVACION
-        self.x = entrada
-        self.a = sum(self.x * self.w)
-        if self.a >= 0.0:
-            self.y = ACTIVACION
-        else:
-            self.y = DESACTIVACION
-        return self.y
 
 class Capa:
     def __init__(self, tamanio, dim):
@@ -82,7 +83,7 @@ class Red:
             entrada = c.calcula(entrada)
         return entrada
 
-    def entrena(self):
+    def entrena(self, t):
         self.capas[-1].entrena(t,None)
         n = len(self.capas) - 1
         for i in n:
@@ -102,6 +103,7 @@ def main():
         red = Red(argv[1])
     except:
         red = Red("configuration.dat")
+    
     for i in xrange(20):
         entrada = genera(4)
         print entrada, red.calcula(entrada)
