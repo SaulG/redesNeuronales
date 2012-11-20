@@ -1,0 +1,47 @@
+Buen día
+
+En esta publicación voy a hablar de mis aportes en el proyecto de el brazo robotica para redes neuronales. Primero voy hacer remembranza del proyecto en el cùal me toco trabajar.
+
+Brazo robótico
+
+La ìdea es utilizar una red neuronal para como función interfaz para poder controlar una red neuronal utilizando un sensor como entrada. Los dispositivos del proyecto son los siguientes:
+
+1.- El brazo robótico es el siguiente (Link) esta la compranos en Steren, este tiene cinco motores de directa, para utilizarlo desarmamos el dispositivo y controlamos utilizando un arduino cada motor por separado para mapear cada uno con una salida de nuestra red neuronal.
+
+2.- Sensor de movimiento del brazo (link) este nos ayudara a medir los movimientos de un brazo real para poder pasarlos como entrada a la neurona que trata de hacer que el brazo imite el mismo movimiento de un brazo real.
+
+3.- Dos arduinos para controlar cada motor de la neurona y tambien la idea es utilizarlo como interfaz de las señales recibidas del sensor y tambien para las señales mandadas al brazo robotico. 
+
+4.- Mouse como entrada que nos podría servir para pruebas principalmente o como dispositivo de entrada secundarío si tenemos problemas con el sensor de movimiento.
+
+Mis aportaciones en el proyecto
+
+Durante estas semanas de trabajo yo me he centrado en la red neuronal en sí mis aportes han sido los siguientes:
+
+1.- Un perceptron que sabe realizar una operación lógica AND a partir de N cantidad de entradas.
+
+Esta es una captura del código corriendo en la terminal:
+<img>
+
+Gráfica de como disminuye el error de la red mientras aumentan el número de entrenamientos:
+<img>
+
+2.- Identificar cuales sería el formato de las entradas y salidas de la red neuronal para poder conectarla con las demás partes del proyecto.
+
+Las salidas de la red neuronal serán cinco valores de -1 a 1 donde cada salida es un motor de el brazo a controlar, el signo representa la dirección hacia donde gira el motor y la magnitud es el porcentaje de la potencia que se le dara como entrada a cada motor para su movimiento en un momento dado.
+
+La entrada de la red son valores de 0 a 1 donde en el mouse serìan cinco entradas con tres valores boolean(dos para mapear el desplazamiento en el eje "Z" y uno para controlar si la mano esta abierta o cerrada) y otros dos valores de cero a uno que representan la magnitud de movimiento en los ejes "X" y "Y".
+
+3.- Una red neuronal con que utiliza un backpropagation que es capaz de entrenar una operación lógica XOR, es capaz de recibir N cantidad de entradas, N cantidad de salidas y N cantidad de capaz ocultas con una cantidad indicada de neurona por cada.
+
+Captura de pantalla de la red neuronal funcionando:
+
+Gráfica del error de la red respecto al número de entrenamientos:
+
+4.- Un script que manda valores del mouse a la red neuronal y que ya es facilmente conectable con el brazo robótico utilizando el trabajo hecho por Saul en arduino. Es decir un demo funcional para poder probar el entrenamiento de la red.
+
+Captura del script funcionando:
+
+
+En este ejemplo la red neuronal no ha sido entrenada así que los valores de salida no son correctos pero se puede observar los valores tomados del mouse y normalizados usados como entrada para la red neuronal que son cinco(tres booleanos y dos de magnitud) y la salida de la red neuronal que son los cinco porcentajes de potencia para cada motor del brazo robotico.
+

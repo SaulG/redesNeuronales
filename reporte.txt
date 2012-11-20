@@ -1,0 +1,218 @@
+Buen día
+
+En esta publicación voy a hablar de mis aportes en el proyecto de el brazo robotica para redes neuronales. Primero voy hacer remembranza del proyecto en el cùal me toco trabajar.
+
+Brazo robótico
+
+La ìdea es utilizar una red neuronal para como función interfaz para poder controlar una red neuronal utilizando un sensor como entrada. Los dispositivos del proyecto son los siguientes:
+
+1.- El brazo robótico es el siguiente (Link) esta la compranos en Steren, este tiene cinco motores de directa, para utilizarlo desarmamos el dispositivo y controlamos utilizando un arduino cada motor por separado para mapear cada uno con una salida de nuestra red neuronal.
+
+2.- Sensor de movimiento del brazo (link) este nos ayudara a medir los movimientos de un brazo real para poder pasarlos como entrada a la neurona que trata de hacer que el brazo imite el mismo movimiento de un brazo real.
+
+3.- Dos arduinos para controlar cada motor de la neurona y tambien la idea es utilizarlo como interfaz de las señales recibidas del sensor y tambien para las señales mandadas al brazo robotico. 
+
+4.- Mouse como entrada que nos podría servir para pruebas principalmente o como dispositivo de entrada secundarío si tenemos problemas con el sensor de movimiento.
+
+Mis aportaciones en el proyecto
+
+Durante estas semanas de trabajo yo me he centrado en la red neuronal en sí mis aportes han sido los siguientes:
+
+1.- Un perceptron que sabe realizar una operación lógica AND a partir de N cantidad de entradas.
+
+Este es el perceptrón corriendo en la terminal:
+-----
+kalavera@kalavera-AOD270:~/Dropbox/neuralNetworks/perceptron$ python perceptron.py 
+Ronda: 10
+[Entradas]-> (Salida, Error)
+[0,0,0]-> (0, 0)
+[0,0,1]-> (0, 0)
+[0,1,0]-> (0, 0)
+[0,1,1]-> (0, 0)
+[1,0,0]-> (0, 0)
+[1,0,1]-> (0, 0)
+[1,1,0]-> (0, 0)
+[1,1,1]-> (1, 0)
+Porcentaje de error:  0.0
+Ronda: 20
+[Entradas]-> (Salida, Error)
+[0,0,0]-> (0, 0)
+[0,0,1]-> (0, 0)
+[0,1,0]-> (0, 0)
+[0,1,1]-> (0, 0)
+[1,0,0]-> (0, 0)
+[1,0,1]-> (0, 0)
+[1,1,0]-> (0, 0)
+[1,1,1]-> (1, 0)
+Porcentaje de error:  0.0
+Ronda: 30
+[Entradas]-> (Salida, Error)
+[0,0,0]-> (0, 0)
+[0,0,1]-> (0, 0)
+[0,1,0]-> (0, 0)
+[0,1,1]-> (0, 0)
+[1,0,0]-> (0, 0)
+[1,0,1]-> (0, 0)
+[1,1,0]-> (0, 0)
+[1,1,1]-> (1, 0)
+Porcentaje de error:  0.0
+Ronda: 40
+[Entradas]-> (Salida, Error)
+[0,0,0]-> (0, 0)
+[0,0,1]-> (0, 0)
+[0,1,0]-> (0, 0)
+[0,1,1]-> (0, 0)
+[1,0,0]-> (0, 0)
+[1,0,1]-> (0, 0)
+[1,1,0]-> (0, 0)
+[1,1,1]-> (1, 0)
+Porcentaje de error:  0.0
+Ronda: 50
+[Entradas]-> (Salida, Error)
+[0,0,0]-> (0, 0)
+[0,0,1]-> (0, 0)
+[0,1,0]-> (0, 0)
+[0,1,1]-> (0, 0)
+[1,0,0]-> (0, 0)
+[1,0,1]-> (0, 0)
+[1,1,0]-> (0, 0)
+[1,1,1]-> (1, 0)
+Porcentaje de error:  0.0
+-----
+
+<img>
+
+En la gráfica se puede ver como hasta el procentaje de errores disminuye conforme avanzan el número de entrenamientos
+
+Gráfica de como disminuye el error de la red mientras aumentan el número de entrenamientos:
+</img>
+
+2.- Identificar cuales sería el formato de las entradas y salidas de la red neuronal para poder conectarla con las demás partes del proyecto.
+
+Las salidas de la red neuronal serán cinco valores de -1 a 1 donde cada salida es un motor de el brazo a controlar, el signo representa la dirección hacia donde gira el motor y la magnitud es el porcentaje de la potencia que se le dara como entrada a cada motor para su movimiento en un momento dado.
+
+La entrada de la red son valores de 0 a 1 donde en el mouse serìan cinco entradas con tres valores boolean(dos para mapear el desplazamiento en el eje "Z" y uno para controlar si la mano esta abierta o cerrada) y otros dos valores de cero a uno que representan la magnitud de movimiento en los ejes "X" y "Y".
+
+3.- Una red neuronal con que utiliza un backpropagation que es capaz de entrenar una operación lógica XOR, es capaz de recibir N cantidad de entradas, N cantidad de salidas y N cantidad de capaz ocultas con una cantidad indicada de neurona por cada.
+
+Resultado de la red neuronal funcionando:
+
+-----
+kalavera@kalavera-AOD270:~/Dropbox/neuralNetworks/backpropagation$ python backpropagation.py 
+Entrenamiento  200
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.474495271915521], 0.1125728815350921)
+[0, 1]-> ([0.37505126707208475], 0.1952804593941034)
+[1, 0]-> ([0.5823535611422921], 0.08721427394526257)
+[1, 1]-> ([0.5220702129331823], 0.13627865361604918)
+Error total: 0.532447443769
+Entrenamiento  400
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.1322986224502954], 0.008751462751122902)
+[0, 1]-> ([0.8394889161833453], 0.012881904013998573)
+[1, 0]-> ([0.8793040698303914], 0.007283753779753512)
+[1, 1]-> ([0.11724811917898809], 0.006873560725505097)
+Error total: 0.0363892840677
+Entrenamiento  600
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.05913700738077921], 0.0017485928209771675)
+[0, 1]-> ([0.9307148291442338], 0.00240021745025636)
+[1, 0]-> ([0.9415353481256814], 0.0017090577593926325)
+[1, 1]-> ([0.05386406206351596], 0.0014506685909911497)
+Error total: 0.00733992070545
+Entrenamiento  800
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.04290168974228023], 0.0009202774913714363)
+[0, 1]-> ([0.9499122257362397], 0.0012543925653487054)
+[1, 0]-> ([0.9569983854337117], 0.0009245694276538073)
+[1, 1]-> ([0.039291967229676726], 0.0007719293443889948)
+Error total: 0.00388046980583
+Entrenamiento  1000
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.035094804595055304], 0.0006158226547825574)
+[0, 1]-> ([0.959063671610146], 0.0008378914910209811)
+[1, 0]-> ([0.9646043401326987], 0.0006264263687208423)
+[1, 1]-> ([0.03222230809688534], 0.0005191385695453013)
+Error total: 0.00260358975226
+Entrenamiento  1200
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.030329170362382255], 0.0004599292874352031)
+[0, 1]-> ([0.964631056127485], 0.0006254810953285579)
+[1, 0]-> ([0.9692976693002945], 0.00047131655519703987)
+[1, 1]-> ([0.02788793831394172], 0.0003888685517011093)
+Error total: 0.00194805307916
+Entrenamiento  1400
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.027048462181108093], 0.00036580965318141735)
+[0, 1]-> ([0.9684571007012248], 0.0004974772480863361)
+[1, 0]-> ([0.972549861633694], 0.0003767550481646738)
+[1, 1]-> ([0.02489620547440081], 0.00030991052351179245)
+Error total: 0.00155153147387
+Entrenamiento  1600
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.02461914725176058], 0.00030305120570193523)
+[0, 1]-> ([0.9712874505768887], 0.0004122052471873045)
+[1, 0]-> ([0.9749689348255783], 0.0003132771118830725)
+[1, 1]-> ([0.02267685184578588], 0.0002571198048178612)
+Error total: 0.00128674992658
+Entrenamiento  1800
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.022729827787687135], 0.0002583225356289571)
+[0, 1]-> ([0.9734873478545911], 0.000351460361891727)
+[1, 0]-> ([0.976856568607479], 0.0002678092083101621)
+[1, 1]-> ([0.02094851916507799], 0.00021942022760481996)
+Error total: 0.0010978166042
+Entrenamiento  2000
+[Entradas]->([Salidas], Error de la entrada)
+[0, 0]-> ([0.021207694303121406], 0.00022488314882732405)
+[0, 1]-> ([0.9752590320475286], 0.000306057747612608)
+[1, 0]-> ([0.9783812886752716], 0.00023368433967096928)
+[1, 1]-> ([0.01955464950192206], 0.00019119215857151033)
+Error total: 0.000956431642298
+-----
+
+Gráfica del error de la red respecto al número de entrenamientos:
+</img>
+
+4.- Un script que manda valores del mouse a la red neuronal y que ya es facilmente conectable con el brazo robótico utilizando el trabajo hecho por Saul en arduino. Es decir un demo funcional para poder probar el entrenamiento de la red.
+
+Script funcionando:
+-----
+Lanzar neurona 
+ Entrada: [1, 0, 0, 0.0, -0.00390625, -1.0] 
+ Valor de la neurona: [0.48522782273394494, 0.46528791920646234, 0.5080086717829049, 0.47842463725639695, 0.3257708187603702]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 1.0, -1.0] 
+ Valor de la neurona: [0.48278577383442495, 0.46450789670091625, 0.5040649848787113, 0.4757326538389182, 0.32530698069301456]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 0.00390625, -0.00390625, -1.0] 
+ Valor de la neurona: [0.4852507257970186, 0.46530789612111967, 0.5080626634104084, 0.47847761475644773, 0.3257815217253954]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 1.0, -1.0] 
+ Valor de la neurona: [0.48278577383442495, 0.46450789670091625, 0.5040649848787113, 0.4757326538389182, 0.32530698069301456]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 0.00390625, -0.00390625, -1.0] 
+ Valor de la neurona: [0.4852507257970186, 0.46530789612111967, 0.5080626634104084, 0.47847761475644773, 0.3257815217253954]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 1.0, -2.0] 
+ Valor de la neurona: [0.47490840060670253, 0.4586456080429631, 0.48683150501808015, 0.4597414567647642, 0.3221387170017972]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 0.00390625, -0.0078125, -1.0] 
+ Valor de la neurona: [0.4852180545680131, 0.465284781840049, 0.5079928777280113, 0.47841383024354855, 0.32576895427644487]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 1.0, -2.0] 
+ Valor de la neurona: [0.47490840060670253, 0.4586456080429631, 0.48683150501808015, 0.4597414567647642, 0.3221387170017972]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 0.00390625, -0.0078125, -1.0] 
+ Valor de la neurona: [0.4852180545680131, 0.465284781840049, 0.5079928777280113, 0.47841383024354855, 0.32576895427644487]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 2.0, -3.0] 
+ Valor de la neurona: [0.47268561743692933, 0.4578659896865551, 0.4831443981393224, 0.4571462140479316, 0.32168335354092753]
+Lanzar neurona 
+ Entrada: [1, 0, 0, 0.0078125, -0.01171875, -1.0] 
+ Valor de la neurona: [0.48520828720331255, 0.46528164447127085, 0.5079770845865935, 0.47840302355804754, 0.3257670898189717]
+-----
+
+Cada que se recibe señal del mouse el script procesa los datos y lanza la neurona dandole como entrada los datos procesados, en este ejemplo la red neuronal debería ser capaz de enviar sus salidas al brazo robótico. 
+En este ejemplo la red neuronal no ha sido entrenada así que los valores de salida no son correctos pero se puede observar los valores tomados del mouse y normalizados usados como entrada para la red neuronal que son cinco(tres booleanos y dos de magnitud) y la salida de la red neuronal que son los cinco porcentajes de potencia para cada motor del brazo robotico.
+
