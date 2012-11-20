@@ -25,15 +25,22 @@ def preprocesamiento(archivo):
      if bandera:
          goodData.append(d)
     data = ''
+    listaDatos = list()
     for l in goodData:
+        lista = list()
         for n in xrange(len(datos[0])):
             if n == 0:
                 continue
             data+= '%s ' %l[n]
+            lista.append(float(l[n]))
+        listaDatos.append(lista)
         print >>newFile, data
         data = ''
     newFile.close()
     return
+   # for l in listaDatos:
+        #print neuronal(l)         
+    
     
 def generatesEntries(archivo):
     file = open(archivo,'r')
@@ -44,6 +51,7 @@ def generatesEntries(archivo):
         i = i.strip()
         lista = i
         print lista
+
 def main():
     archivo = argv[1]
     print "Preprocesando ..."

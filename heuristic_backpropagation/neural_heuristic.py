@@ -139,8 +139,30 @@ class NetHeuristic:
         if n is None:
             n = self.entrenamientos
 
+        muestras = cargar_archivos(["muestraHandPointDown.txt", "muestraHandPointUp.txt"])
+        contador = 0
+
         red = RedNeuronal(self.entradas, self.salidas, self.alfa, self.momentum, solucion)
 
+        """
+        error = 0.0
+        for i in range(n):
+            temp = red.backpropagation(muestras[contador][0], muestras[contador][1])[0]
+            contador += 1
+
+            if contador >= len(muestras):
+                contador = 0
+
+            if i >= n-10:
+                error += temp
+
+        if cmd is not None:
+            return float(error)/10, red
+        
+        return error
+    """
+
+    
         error = 0.0
         for i in range(n-1):
             red.backpropagation([0.0, 0.0], [0.0])
@@ -162,6 +184,7 @@ class NetHeuristic:
             return error, red
 
         return error
+    
 
     def modificar_solucion(self, solucion):
         inicio = self.entradas + self.salidas
@@ -232,6 +255,9 @@ class NetHeuristic:
         modificado = []
         actual = []
 
+        fl = open("configuracion.dat", "w")
+        contador = 0
+
         inicio_time = time.time()
 
         while True:
@@ -258,12 +284,15 @@ class NetHeuristic:
                 objetivo_actual = self.funcion_objetivo(actual)
 
                 if objetivo_modificado <= objetivo_actual:
+                    fl.write(str(contador)+" "+str(objetivo_modificado)+"\n")
+                    contador += 1
                     paso += 1
                     actual = self.copiar(modificado)
 
             if self.funcion_objetivo(actual) <= self.funcion_objetivo(mejor):
                 mejor = actual
 
+        fl.close()
         return mejor
 
 
@@ -281,20 +310,37 @@ def guardar_red(red, name_file):
     fl.close()
 
 def cargar_red(name_file):
-    fl.open(name_file, "r")
+    fl = file(name_file, "r")
     red = pickle.load(fl) 
     fl.close()
     return red
 
+def cargar_archivos(archivos):
+    muestras = list()
+
+    for i in range(len(archivos)):
+        fl = open(archivos[0])
+        for j in fl:
+            temp = j.split(",")
+            for h in range(len(temp)):
+                temp[h] = int(temp[h])
+            muestras.append([temp, [i]])
+        fl.close()
+
+    random.shuffle(muestras)
+
+    return muestras
+
 def main():
-    n = NetHeuristic(2, 1, 10, 500, 0.95, 0.1)
-  #  config = n.busqueda_voraz(10, 50)
+    n = NetHeuristic(2, 1, 20, 200, 0.95, 0.1)
+#    config = n.busqueda_voraz(10, 50)
+#    config = n.instancia_inicial()
     config = [[0, 0, 0, 1, 1], [0, 0, 0, 1, 1], [0, 0, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]]
 
-    (error, red) = n.funcion_objetivo(config, 500, "Dummy")
+    (error, red) = n.funcion_objetivo(config, 1000, "Dummy")
     print "Error: ", error
 
-    red.graficar()
-    guardar_red(red, "exor.dat")
+#    red.graficar()
+#    guardar_red(red, "red_brazo.dat")
 
 main()

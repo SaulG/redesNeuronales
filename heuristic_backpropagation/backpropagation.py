@@ -34,7 +34,7 @@ class RedNeuronal:
         for i in range(self.total_neuronas):
             for j in range(self.total_neuronas):
                 if self.red[i][j] is 1:
-                    self.pesos[i][j] = random.uniform(-1, 1)
+                    self.pesos[i][j] = random.uniform(-0.1, 0.1)
 
     def graficar(self, solucion=None, pesos=None):
         if solucion == None:
@@ -106,12 +106,12 @@ class RedNeuronal:
                 if self.red[j][i] is 1:
                     cambio = self.alfa*delta[i]*self.last_output[j] + self.cambio_anterior[j][i]*self.N
                     self.cambio_anterior[j][i] = cambio
-                    self.pesos[j][i] -= cambio
+                    self.pesos[j][i] += cambio
                     siguientes.append(j)
 
             cambio = self.alfa*delta[i] + self.threshold_vector_anterior[i]*self.N # Este es el valor del umbral agregado ala sumatoria de pesos*entradas
             self.threshold_vector_anterior[i] = cambio
-            self.threshold_vector[i] -= cambio 
+            self.threshold_vector[i] += cambio 
         del contador
         general_error /= 2.0
 
@@ -131,12 +131,12 @@ class RedNeuronal:
                     if self.red[j][i] is 1:
                         cambio = self.alfa*delta[i]*self.last_output[j] + self.cambio_anterior[j][i]*self.N
                         self.cambio_anterior[j][i] = cambio
-                        self.pesos[j][i] -= cambio
+                        self.pesos[j][i] += cambio
                         sig_temp.append(j)
 
                 cambio = self.alfa*delta[i] + self.threshold_vector_anterior[i]*self.N# Este es el valor del umbral agregado ala sumatoria de pesos*entradas
                 self.threshold_vector_anterior[i] = cambio
-                self.threshold_vector[i] -= cambio 
+                self.threshold_vector[i] += cambio 
             
             if len(sig_temp) < 1:
                 break
@@ -150,12 +150,11 @@ class RedNeuronal:
         siguientes = list()
         for i in range(len(entradas)):
             visitados[i] = 1
-            self.last_output[i] = entradas[i]
+            self.last_output[i] = float(entradas[i])
 
             for j in range(self.total_neuronas):
                 if self.red[i][j] is 1:
                     siguientes.append(j)
-
 
         # tomar en cuenta siguiente capa
         while True:
@@ -187,11 +186,11 @@ class RedNeuronal:
 
 def kernel(value ):
     return math.tanh(value)
-    #return (1.0/(1+math.exp(-1*value)))
+#    return (1.0/(1+math.exp(-1*value)))
 
 def derivada_funcion(value ):
     #return (value-value**2)
-     return 1 - value**2
+    return 1 - value**2
     #return kernel(value)*(1 - kernel(value))
     
 def copy_matrix(matrix):

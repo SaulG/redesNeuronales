@@ -1,0 +1,8 @@
+set key off
+set term png
+set output 'configuración_neurona.png'
+set pointsize 0.5
+set title 'Configuración de la red'
+set xlabel 'Iteraciones'
+set ylabel 'Error'
+plot 'configuracion.dat' using 1:2 with lines 

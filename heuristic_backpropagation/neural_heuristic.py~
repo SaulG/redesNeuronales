@@ -143,22 +143,22 @@ class NetHeuristic:
 
         error = 0.0
         for i in range(n-1):
-            red.backpropagation([0, 0], [0])
-            red.backpropagation([0, 1], [1])
-            red.backpropagation([1, 0], [1])
-            red.backpropagation([1, 1], [0])
+            red.backpropagation([0.0, 0.0], [0.0])
+            red.backpropagation([0.0, 1.0], [1.0])
+            red.backpropagation([1.0, 0.0], [1.0])
+            red.backpropagation([1.0, 1.0], [0.0])
 
-        error += red.backpropagation([0, 0], [0])[0]
-        error += red.backpropagation([0, 1], [1])[0]
-        error += red.backpropagation([1, 0], [1])[0]
-        error += red.backpropagation([1, 1], [0])[0]
+        error += red.backpropagation([0.0, 0.0], [0.0])[0]
+        error += red.backpropagation([0.0, 1.0], [1.0])[0]
+        error += red.backpropagation([1.0, 0.0], [1.0])[0]
+        error += red.backpropagation([1.0, 1.0], [0.0])[0]
 
 
         if cmd is not None:
-            print "[0, 0]", red.backpropagation([0, 0], [0])
-            print "[0, 1]", red.backpropagation([0, 1], [1])
-            print "[1, 0]", red.backpropagation([1, 0], [1])
-            print "[1, 1]", red.backpropagation([1, 1], [0])
+            print "[0, 0]", red.backpropagation([0.0, 0.0], [0.0])
+            print "[0, 1]", red.backpropagation([0.0, 1.0], [1.0])
+            print "[1, 0]", red.backpropagation([1.0, 0.0], [1.0])
+            print "[1, 1]", red.backpropagation([1.0, 1.0], [0.0])
             return error, red
 
         return error
@@ -287,12 +287,14 @@ def cargar_red(name_file):
     return red
 
 def main():
-    n = NetHeuristic(2, 1, 10, 200)
-    config = n.busqueda_voraz(10, 50)
-    
-    (error, red) = n.funcion_objetivo(config, 2500, "Dummy")
+    n = NetHeuristic(2, 1, 10, 500, 0.95, 0.1)
+  #  config = n.busqueda_voraz(10, 50)
+    config = [[0, 0, 0, 1, 1], [0, 0, 0, 1, 1], [0, 0, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]]
+
+    (error, red) = n.funcion_objetivo(config, 500, "Dummy")
     print "Error: ", error
-    
-    guardar_red(red, sys.argv[2])
+
+    red.graficar()
+    guardar_red(red, "exor.dat")
 
 main()
