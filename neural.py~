@@ -1,0 +1,48 @@
+from numpy import array
+from sys import argv
+import random
+
+ACTIVACION = 1.0
+DESACTIVACION = -1.0
+
+class Neurona:
+    def __init__(self, x):
+        self.x = x
+        self.w = self.pesos(len(x))
+        self.a = self.activacion(self.x, self.w)
+        self.y = self.salida(self.a)
+
+    def activacion(self, x, w):
+        a = sum(self.x * self.w)
+        return a
+
+    def pesos(self, w):
+        global ACTIVACION, DESACTIVACION
+        lista = list()
+        print w
+        for i in range(w):
+            lista.append(random.uniform(ACTIVACION, DESACTIVACION))
+        lista = array(lista)
+        print lista
+        return lista
+
+    def salida(self, a):
+        global ACTIVACION, DESACTIVACION
+        if a <= 0:
+            return ACTIVACION
+        else:
+            return DESACTIVACION
+
+
+def main():
+    x = str(argv[1]).split(',')
+    lista = list()
+    for i in x:
+        lista.append(float(i))
+    lista.append(-1.0)
+    x = array(lista)
+    print x
+    neurona = Neurona(x)
+    print "Salida\t",neurona.y
+    print "Activacion\t",neurona.a
+main()
